@@ -1,0 +1,58 @@
+{% extends 'todproof/base.html' %}
+
+{% block content %}
+<!-- <center> -->
+  <!-- <h2>Message: <i>{{ message }}</i></h2> -->
+  <h2>Message</h2>
+  <!-- <br> -->
+  <strong>Id:</strong>&nbsp;&nbsp;{{ message.id }}<br>
+  <strong>Date Of Delivery:</strong>&nbsp;&nbsp;{{ message.dod }}<br>
+  <strong>Time Of Day:</strong>&nbsp;&nbsp;{{ message.tod }}<br>
+  <strong>Day Of Week:</strong>&nbsp;&nbsp;{{ message.dow }}<br>
+  <strong>Descriptor:</strong>&nbsp;&nbsp;{{ message.descriptor }}<br>
+  <!-- <strong>Title:</strong>&nbsp;&nbsp;<i>{{ message.title }}</i><br> -->
+  <strong>Title:</strong>&nbsp;&nbsp;{{ message.title }}<br>
+  <!-- </center> -->
+  <hr>
+  <a class="btn btn-outline-primary btn-sm" href="{% url 'update-message' message.id %}">Edit</a> <!---->
+  <a class="btn btn-outline-danger btn-sm" href="{% url 'delete-message' message.id %}">Delete</a> <!---->
+  <a class="btn btn-outline-success btn-sm" href="{% url 'index-messages' %}">All Messages</a>
+  &nbsp;
+  <a class="btn btn-outline-secondary btn-sm" href="{% url 'create-message' %}">New Message</a> <!---->
+  <a class="btn btn-outline-secondary btn-sm" href="{% url 'create-message-translation' message.id %}">New Translation</a><br><br> <!---->
+  <center><h2>Translations</h2></center>
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th scope="col">id</th>
+        <th scope="col">lan</th>
+        <th scope="col">tran_title</th>
+        <th scope="col">version</th>
+        <th scope="col">blkc</th>
+        <th scope="col">subc</th>
+        <th scope="col">senc</th>
+        <th scope="col">xcrip</th>
+        <th scope="col">li</th>
+        <th scope="col">actions</th>
+      </tr>
+    </thead>
+    <tbody>
+  {% for translation in message.translations.all %}
+      <tr>
+        <th scope="row"><a href="{% url 'show-message-translation' message.id translation.id %}">{{ translation.id }}</a></th> <!---->
+        <!-- <td>{{ translation.id }}</td> -->
+        <td>{{ translation.lan }}</td>
+        <td>{{ translation.tran_title }}</td>
+        <td>{{ translation.version }}</td>
+        <td>{{ translation.blkc }}</td>
+        <td>{{ translation.subc }}</td>
+        <td>{{ translation.senc }}</td>
+        <td>{{ translation.xcrip }}</td>
+        <td>{{ translation.li }}</td>
+        <td><a href="{% url 'update-message-translation' translation.message.id translation.id %}">Edit</a>&nbsp;&nbsp;<a href="{% url 'delete-message-translation' translation.message.id translation.id %}">Delete</a></td> <!-- -->
+        <td></td>
+      </tr>
+  {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

@@ -1,0 +1,32 @@
+{% extends 'todproof/base.html' %}
+
+{% block content %}
+
+<center><h2>All Messages</h2></center>
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th scope="col">Id</th>
+      <th scope="col">Date</th>
+      <th scope="col">Time</th>
+      <th scope="col">Day</th>
+      <th scope="col">Title</th>
+      <th scope="col"></th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody>
+{% for message in message_list %}
+    <tr>
+      <th scope="row"><a href="{% url 'show-message' message.id %}">{{ message.id }}</a></th> <!---->
+      <td>{{ message.dod }}</td>
+      <td>{{ message.tod }}</td>
+      <td>{{ message.dow }}</td>
+      <td>{{ message.title }}</td>
+      <td><a href="{% url 'update-message' message.id %}">Edit</a></td> <!---->
+      <td><a href="{% url 'delete-message' message.id %}">Delete</a></td> <!---->
+    </tr>
+{% endfor %}
+  </tbody>
+</table>
+{% endblock %}

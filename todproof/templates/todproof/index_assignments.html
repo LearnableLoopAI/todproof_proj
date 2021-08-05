@@ -1,0 +1,46 @@
+{% extends 'todproof/base.html' %}
+{% block content %}
+<center><h2>All Assignments</h2></center>
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th scope="col">Id</th>
+      <th scope="col">Role</th>
+      <th scope="col">Active</th>
+      <th scope="col">Status</th>
+      <th scope="col">CI</th>
+      <th scope="col">Place</th>
+      <th scope="col">CCs</th>
+      <th scope="col">VCs</th>
+      <th scope="col">VT</th>
+      <th scope="col">CT</th>
+      <th scope="col">M TEs</th>
+      <th scope="col">T TEs</th>
+      <th scope="col">Translation</th>
+      <th scope="col">User</th>
+      <th scope="col">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+{% for assignment in assignment_list %}
+    <tr>
+      <th scope="row"><a href="{% url 'show-assignment' assignment.id %}">{{ assignment.id }}</a></th>
+      <td>{{ assignment.role }}</td>
+      <td>{{ assignment.active }}</td>
+      <td>{{ assignment.status }}</td>
+      <td>{{ assignment.ci }}</td>
+      <td>{{ assignment.place }}</td>
+      <td>{{ assignment.ccs }}</td>
+      <td>{{ assignment.vcs }}</td>
+      <td>{{ assignment.vt }}</td>
+      <td>{{ assignment.ct }}</td>
+      <td>{{ assignment.majtes }}</td>
+      <td>{{ assignment.tietes }}</td>
+      <td>{{ assignment.translation }}</td>
+      <td>{{ assignment.user }}</td>
+      <td><a href="{% url 'update-assignment' assignment.id %}">Edit</a>&nbsp;&nbsp;<a href="{% url 'delete-assignment' assignment.id %}">Delete</a></td>
+    </tr>
+{% endfor %}
+  </tbody>
+</table>
+{% endblock %}
