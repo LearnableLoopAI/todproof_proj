@@ -247,15 +247,31 @@ def delete_lookup(request, message_id, translation_id):
 #   # return redirect('/')
 #   return render(request, 'todproof/show_document_translation.html', {'translation': translation, 'sentences': sentences})
 
+def sentence_vote_time(sentence):
+  # svc = sentence_vote_contribution(sentence)
+  # if svc
+  #   svc.effort_in_seconds
+  # else
+  #   0
+  return 7.7
+
+def sentence_create_time(sentence):
+  # sccs = sentence_create_contributions(sentence)
+  # sccs.sum("effort_in_seconds")
+  return 8.8
+
 def show_translation_sentence(request, translation_id, sentence_id):
   translation = Translation.objects.get(pk=translation_id)
   sentence = translation.sentences.get(pk=sentence_id)
 
-  #update E_change
+  #update E_edit
   # @E_edit = Edit.joins(sentence: :translation).where(translations: {id: @sentence.translation.eng_tran_id}, sentences: {rsen: @sentence.rsen}).first
-  E_change = Sentence.objects.filter(translation__id=sentence.translation.eng_tran_id, rsen=sentence.rsen)
+  E_edit = Edit.objects.select_related().filter(sentence__translation__id=sentence.translation.eng_tran_id, sentence__rsen=sentence.rsen)[0]
 
-  return render(request, 'todproof/show_translation_sentence.html', {'translation': translation, 'sentence': sentence, 'E_change': E_change})
+  return render(request, 'todproof/show_translation_sentence.html', 
+    {'translation': translation, 'sentence': sentence, 'E_edit': E_edit, 'sentence_count': translation.sentences.count(), 
+    'sentence_vote_time': sentence_vote_time(sentence), 'sentence_create_time': sentence_create_time(sentence)})
+
 
 def create_translation_sentence(request, translation_id):
   translation = Translation.objects.get(pk=translation_id)
@@ -306,6 +322,7 @@ def delete_translation_sentence(request, translation_id, sentence_id):
   except Exception as e:
     print('Sentence delete failure: ' + e)
   return redirect(f'/messages/{translation.message.id}/translations/{translation_id}')
+
 
 ###############################################################################
 # Assignment

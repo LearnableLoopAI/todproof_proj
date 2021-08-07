@@ -154,7 +154,7 @@ class Edit(models.Model):
   hid = models.BooleanField('Hidden', default=False)
   top = models.CharField('Top Edit', max_length=1, validators=[MinLengthValidator(1), MaxLengthValidator(1)], choices=TopEditType.choices, default=TopEditType.Z, blank=False, null=False,)
   mods = models.IntegerField('Mods', blank=True, null=True,) #to be removed, not used
-  sentence = models.ForeignKey(Sentence, blank=False, null=False, on_delete=models.CASCADE, related_name='changes')
+  sentence = models.ForeignKey(Sentence, blank=False, null=False, on_delete=models.CASCADE, related_name='edits')
   created_at = models.DateTimeField(auto_now_add=True)
   updated_at = models.DateTimeField(auto_now=True)
 

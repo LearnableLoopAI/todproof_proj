@@ -1,23 +1,105 @@
 {% extends 'todproof/base.html' %}
 
 {% block content %}
-<!-- <center> -->
-  <!-- <h2>Sentence: <i>{{ sentence }}</i></h2> -->
-  <h2>Sentence</h2>
-  <!-- <br> -->
-  <strong>Id:</strong>&nbsp;&nbsp;{{ sentence.id }}<br>
-  <strong>Blk:</strong>&nbsp;&nbsp;{{ sentence.blk }}<br>
-  <strong>Sub:</strong>&nbsp;&nbsp;{{ sentence.sub }}<br>
-  <strong>RSub:</strong>&nbsp;&nbsp;{{ sentence.rsub }}<br>
-  <strong>Sen:</strong>&nbsp;&nbsp;{{ sentence.sen }}<br>
-  <strong>RSen:</strong>&nbsp;&nbsp;<i>{{ sentence.rsen }}</i><br>
-  <strong>Typ:</strong>&nbsp;&nbsp;{{ sentence.typ }}<br>
-  <strong>Tie:</strong>&nbsp;&nbsp;{{ sentence.tie }}<br>
-  <a class="btn btn-outline-primary btn-sm" href="">Prev Sentence</a> <!--% url 'prev-sentence' sentence.translation.id sentence.id %-->
-  <a class="btn btn-outline-primary btn-sm" href="">Next Sentence</a><br> <!--% url 'next-sentence' sentence.translation.id sentence.id %-->
-  {{E_change.content}}<br>
-  {% for change in sentence.changes.all %}
-    {{change.content}}
-  {% endfor %}
+<div align=center>
+  <a href="" class="btn btn-info btn-default"><span class="glyphicon glyphicon-chevron-left"></span></a> <!--% url 'prev-sentence' sentence.translation.id sentence.id %-->
+  <a href="" class="btn btn-warning btn-default"><span class="glyphicon glyphicon-minus"></span></a> <!--% url 'decrease-context' sentence.translation.id sentence.id %-->
+{% if user.admin %}
+  ({{ sentence.id }})
+  <form class="form-inline" style="display:inline;" method="POST" action="{% url 'search-messages' %}"> <!--{{ sentence.blk }}-->
+    <input class="form-control" type="search" placeholder="Blk" aria-label="Search" name="searched" size="3">
+  </form>
+  {{ sentence.sub }}&nbsp;
+  <form class="form-inline" style="display:inline;" method="POST" action="{% url 'search-messages' %}"> <!--{{ sentence.rsub }}-->
+    <input class="form-control" type="search" placeholder="RSub" aria-label="Search" name="searched" size="5">
+  </form>
+  {{ sentence.sen }}
+{% endif %}
+  <form class="form-inline" style="display:inline;" method="POST" action="{% url 'search-messages' %}"> <!--{{ sentence.rsen }}-->
+    <input class="form-control" type="search" placeholder="RSen" aria-label="Search" name="searched" size="5">
+  </form>
+{% if user.admin %}
+  {{ sentence.typ }}
+{% endif %}    
+  <a href="" class="btn btn-info btn-default"><span class="glyphicon glyphicon-forward"></span></a> <!--% url 'prev-sentence' sentence.translation.id sentence.id %-->
+777/{{ sentence_count }}
+{% if sentence_count > 0 %}
+  {{ sentence_count }}
+{% else %}
+  'N/A'
+{% endif %}
+{% if user.admin %}
+  {{ sentence_vote_time }}s
+  {{ sentence_create_time }}s
+{% endif %}
+  <form class="form-inline" style="display:inline;" method="POST" action="{% url 'search-messages' %}">
+    {% csrf_token %}
+    <input class="form-control" type="search" placeholder="Search" aria-label="Search" name="searched" size="6">
+    <!--<button class="btn btn-outline-success" type="submit">Search</button>-->
+    <a href="" class="btn btn-success btn-default"><span class="glyphicon glyphicon-search"></span></a> <!--% url 'search' sentence.translation.id sentence.id %-->
+  </form>
+  &nbsp;&nbsp;&nbsp;
+  <a href="" class="btn btn-info btn-default"><span class="glyphicon glyphicon-bookmark"></span></a> <!--% url 'place' sentence.translation.id sentence.id %-->
+  &nbsp;&nbsp;&nbsp;
+  <a href="" class="btn btn-primary btn-default"><span class="glyphicon glyphicon-eye-open"></span></a> <!--% url 'preview' sentence.translation.id sentence.id %-->
+  &nbsp;&nbsp;&nbsp;
+  <a href="" class="btn btn-warning btn-default"><span class="glyphicon glyphicon-plus"></span></a> <!--% url 'increase-context' sentence.translation.id sentence.id %-->
+  <a href="" class="btn btn-info btn-default"><span class="glyphicon glyphicon-chevron-right"></span></a> <!--% url 'next-sentence' sentence.translation.id sentence.id %-->
+</div><br>
+
+{% if user.admin %}
+<div align='center' class='show-actions'>
+  <a class="btn btn-xs btn-primary" href="">Edit</a> <!--% url 'import-content' assignment.id %-->
+  <a class="btn btn-xs btn-danger" href="">Delete</a> <!--% url 'import-content' assignment.id %-->
+  <a class="btn btn-xs btn-success" href="">View Sentences</a> <!--% url 'import-content' assignment.id %-->
+  <a class="btn btn-xs btn-primary" href="">New Sentence</a> <!--% url 'import-content' assignment.id %-->
+  &nbsp;
+  <a class="btn btn-xs btn-primary" href="">New Edit</a> <!--% url 'import-content' assignment.id %-->
+</div>
+{% endif %}
+
+<div class="row">
+  <div class="col-xs-12">
+{% for e in pred_E_edits %}
+    <div style='color:blue;'></div> <!--{ markdown(e.content) }-->
+{% endfor %}
+  </div>
+</div>
+<br/>
+
+<div class="row">
+  <!--<table class="table table-bordered table-hover">-->
+  <table class="table table-borderless table-hover">
+{% if False %}
+    <thead>
+      <tr>
+        <th>Id</th>
+        <th></th> <!--{ markdown(@E_edit.content) if @E_edit }-->
+        <th>({{sentence.id}}) Sentence: {{sentence.blk}}.{{sentence.sub}}.{{sentence.rsub}}.{{sentence.sen}}.{{sentence.rsen}}.{{sentence.typ}}</th>
+        <th>#</th>
+        <th>Contributions</th>
+      </tr>
+    </thead>
+{% endif %}
+    <tbody>
+      <tr>
+{% if user.admin %}
+        <td></td> <!--{ link_to @E_edit.id,  sentence_edit_path(@E_edit.sentence, @E_edit) if @E_edit }-->
+{% endif %}
+        <td style='color:blue;'></td> <!--{ markdown(@E_edit.content) if @E_edit }-->
+      </tr>
+    </tbody>
+  </table>
+</div>
+      
+
+
+
+  
+{{E_edit.content}}<br>
+{% for edit in sentence.edits.all %}
+  {{edit.content}}
+{% endfor %}
+
 {% endblock %}
 
