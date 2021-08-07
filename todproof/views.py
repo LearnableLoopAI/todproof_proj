@@ -100,7 +100,7 @@ def index_message_translations(request, message_id):
   # return redirect('/')
   return render(request, 'todproof/show_message.html', {'message': message, 'translations': translations})
 
-def show_message_translation(request, message_id, translation_id):
+def show_translation(request, message_id, translation_id):
   # return redirect('/')
   # return HttpResponse("<a class='dropdown-item' href='#'>Translations</a>")
   # return redirect('show')
@@ -109,9 +109,9 @@ def show_message_translation(request, message_id, translation_id):
   assignments = translation.assignments.all
   sentences = translation.sentences.all
   lookups = translation.lookups.all
-  return render(request, 'todproof/show_message_translation.html', {'message': message, 'translation': translation, 'assignments': assignments, 'sentences': sentences, 'lookups': lookups})
+  return render(request, 'todproof/show_translation.html', {'message': message, 'translation': translation, 'assignments': assignments, 'sentences': sentences, 'lookups': lookups})
 
-def create_message_translation(request, message_id):
+def create_translation(request, message_id):
   if request.method == 'POST':
     form = TranslationForm(request.POST)
     if form.is_valid():
@@ -134,9 +134,9 @@ def create_message_translation(request, message_id):
   elif request.method == 'GET':
     form = TranslationForm()
     # print('get')
-    return render(request, 'todproof/create_message_translation.html', {'form': form})
+    return render(request, 'todproof/create_translation.html', {'form': form})
 
-def update_message_translation(request, message_id, translation_id):
+def update_translation(request, message_id, translation_id):
   translation = Translation.objects.get(pk=translation_id)
   message = Message.objects.get(pk=message_id)
   form = TranslationForm(initial={'lan': translation.lan, 'tran_title': translation.tran_title, 'eng_tran': translation.eng_tran, 'descrip': translation.descrip, 'blkc': translation.blkc, 'subc': translation.subc, 'senc': translation.senc, 'xcrip': translation.xcrip, 'li': translation.li, 'pubdate': translation.pubdate, 'version': translation.version })
@@ -158,9 +158,9 @@ def update_message_translation(request, message_id, translation_id):
       print('form is not valid')  
   elif request.method == 'GET':
     form = TranslationForm(initial={'lan': translation.lan, 'tran_title': translation.tran_title, 'eng_tran': translation.eng_tran, 'descrip': translation.descrip, 'blkc': translation.blkc, 'subc': translation.subc, 'senc': translation.senc, 'xcrip': translation.xcrip, 'li': translation.li, 'pubdate': translation.pubdate, 'version': translation.version })
-    return render(request, 'todproof/update_message_translation.html', {'message': message, 'translation': translation, 'form': form})
+    return render(request, 'todproof/update_translation.html', {'message': message, 'translation': translation, 'form': form})
 
-def delete_message_translation(request, message_id, translation_id):
+def delete_translation(request, message_id, translation_id):
   translation = Translation.objects.get(pk=translation_id)
   message = Message.objects.get(pk=message_id)
   try:
@@ -260,7 +260,7 @@ def sentence_create_time(sentence):
   # sccs.sum("effort_in_seconds")
   return 8.8
 
-def show_translation_sentence(request, translation_id, sentence_id):
+def show_sentence(request, translation_id, sentence_id):
   translation = Translation.objects.get(pk=translation_id)
   sentence = translation.sentences.get(pk=sentence_id)
 
@@ -268,12 +268,12 @@ def show_translation_sentence(request, translation_id, sentence_id):
   # @E_edit = Edit.joins(sentence: :translation).where(translations: {id: @sentence.translation.eng_tran_id}, sentences: {rsen: @sentence.rsen}).first
   E_edit = Edit.objects.select_related().filter(sentence__translation__id=sentence.translation.eng_tran_id, sentence__rsen=sentence.rsen)[0]
 
-  return render(request, 'todproof/show_translation_sentence.html', 
+  return render(request, 'todproof/show_sentence.html', 
     {'translation': translation, 'sentence': sentence, 'E_edit': E_edit, 'sentence_count': translation.sentences.count(), 
     'sentence_vote_time': sentence_vote_time(sentence), 'sentence_create_time': sentence_create_time(sentence)})
 
 
-def create_translation_sentence(request, translation_id):
+def create_sentence(request, translation_id):
   translation = Translation.objects.get(pk=translation_id)
   if request.method == 'POST':
     form = SentenceForm(request.POST)
@@ -285,14 +285,14 @@ def create_translation_sentence(request, translation_id):
         sentence = Sentence.objects.get(pk=sentence.id)
         sentence.translation_id = translation_id
         sentence.save()
-        return render(request, 'todproof/show_message_translation.html', {'translation': translation})
+        return render(request, 'todproof/show_translation.html', {'translation': translation})
       except:
         pass
   elif request.method == 'GET':
     form = SentenceForm()
-    return render(request, 'todproof/create_translation_sentence.html', {'translation': translation, 'form': form})
+    return render(request, 'todproof/create_sentence.html', {'translation': translation, 'form': form})
 
-def update_translation_sentence(request, translation_id, sentence_id):
+def update_sentence(request, translation_id, sentence_id):
   sentence = Sentence.objects.get(pk=sentence_id)
   translation = Sentence.objects.get(pk=sentence_id)
   form = SentenceForm(initial={'blk': sentence.blk, 'sub': sentence.sub, 'rsub': sentence.rsub, 'sen': sentence.sen, 'rsen': sentence.rsen, 'typ': sentence.typ, 'tie': sentence.tie })
@@ -311,9 +311,9 @@ def update_translation_sentence(request, translation_id, sentence_id):
       print('form is not valid')  
   elif request.method == 'GET':
     form = SentenceForm(initial={'blk': sentence.blk, 'sub': sentence.sub, 'rsub': sentence.rsub, 'sen': sentence.sen, 'rsen': sentence.rsen, 'typ': sentence.typ, 'tie': sentence.tie })
-    return render(request, 'todproof/update_translation_sentence.html', {'translation': translation, 'sentence': sentence, 'form': form})
+    return render(request, 'todproof/update_sentence.html', {'translation': translation, 'sentence': sentence, 'form': form})
 
-def delete_translation_sentence(request, translation_id, sentence_id):
+def delete_sentence(request, translation_id, sentence_id):
   sentence = Sentence.objects.get(pk=sentence_id)
   translation = Translation.objects.get(pk=translation_id)
   try:

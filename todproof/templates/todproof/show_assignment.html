@@ -20,7 +20,7 @@
   {% endif %}
 {% endif %}
   <!--<strong>Translation:</strong>&nbsp;&nbsp;{{ assignment.translation }}<br>-->
-  <strong>Translation:</strong>&nbsp;&nbsp;<a href="{% url 'show-message-translation' assignment.translation.message.id assignment.translation.id %}">{{ assignment.translation }}</a><br>
+  <strong>Translation:</strong>&nbsp;&nbsp;<a href="{% url 'show-translation' assignment.translation.message.id assignment.translation.id %}">{{ assignment.translation }}</a><br>
   <strong>User:</strong>&nbsp;&nbsp;{{ assignment.user }}<br>
   <strong>Status:</strong>&nbsp;&nbsp;{{ assignment.status }}<br>
   <strong>Final Create additions:</strong>&nbsp;&nbsp;{{ assignment.ccs }}<br>

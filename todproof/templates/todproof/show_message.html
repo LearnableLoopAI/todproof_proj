@@ -19,7 +19,7 @@
   <a class="btn btn-xs btn-success" href="{% url 'index-messages' %}">View all Messages</a>
   &nbsp;
   <a class="btn btn-xs btn-primary" href="{% url 'create-message' %}">New Message</a> <!---->
-  <a class="btn btn-xs btn-primary" href="{% url 'create-message-translation' message.id %}">New Translation</a><br><br> <!---->
+  <a class="btn btn-xs btn-primary" href="{% url 'create-translation' message.id %}">New Translation</a><br><br> <!---->
   <center><h2>Translations</h2></center>
   <table class="table table-hover">
     <thead>
@@ -39,7 +39,7 @@
     <tbody>
   {% for translation in message.translations.all %}
       <tr>
-        <th scope="row"><a href="{% url 'show-message-translation' message.id translation.id %}">{{ translation.id }}</a></th> <!---->
+        <th scope="row"><a href="{% url 'show-translation' message.id translation.id %}">{{ translation.id }}</a></th> <!---->
         <!-- <td>{{ translation.id }}</td> -->
         <td>{{ translation.lan }}</td>
         <td>{{ translation.tran_title }}</td>
@@ -49,7 +49,7 @@
         <td>{{ translation.senc }}</td>
         <td>{{ translation.xcrip }}</td>
         <td>{{ translation.li }}</td>
-        <td><a href="{% url 'update-message-translation' translation.message.id translation.id %}">Edit</a>&nbsp;&nbsp;<a href="{% url 'delete-message-translation' translation.message.id translation.id %}">Delete</a></td> <!-- -->
+        <td><a href="{% url 'update-translation' translation.message.id translation.id %}">Edit</a>&nbsp;&nbsp;<a href="{% url 'delete-translation' translation.message.id translation.id %}">Delete</a></td> <!-- -->
         <td></td>
       </tr>
   {% endfor %}

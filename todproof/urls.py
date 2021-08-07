@@ -18,20 +18,20 @@ urlpatterns = [
     # path('messages/<message_id>/translations/', views.show_message_translations, name='show-message-translations'),
 
     path('messages/<message_id>/translations/', views.index_message_translations, name='index-message-translations'),
-    path('messages/<message_id>/translations/<translation_id>/', views.show_message_translation, name='show-message-translation'),
-    path('messages/<message_id>/translations/new', views.create_message_translation, name='create-message-translation'),
-    path('messages/<message_id>/translations/<translation_id>/edit', views.update_message_translation, name='update-message-translation'),
-    path('messages/<message_id>/translations/<translation_id>/delete', views.delete_message_translation, name='delete-message-translation'),
+    path('messages/<message_id>/translations/<translation_id>/', views.show_translation, name='show-translation'),
+    path('messages/<message_id>/translations/new', views.create_translation, name='create-translation'),
+    path('messages/<message_id>/translations/<translation_id>/edit', views.update_translation, name='update-translation'),
+    path('messages/<message_id>/translations/<translation_id>/delete', views.delete_translation, name='delete-translation'),
 
     path('lookup_link/messages/<message_id>/translations/<translation_id>', views.import_lookup, name='import-lookup'),
     path('lookup_delete_link/messages/<message_id>/translations/<translation_id>', views.delete_lookup, name='delete-lookup'),
 
     # Sentence
     # path('translations/<translation_id>/sentences/', views.index_translation_sentences, name='index-translation-sentences'),
-    path('translations/<translation_id>/sentences/<sentence_id>/', views.show_translation_sentence, name='show-translation-sentence'),
-    path('translations/<translation_id>/sentences/new', views.create_translation_sentence, name='create-translation-sentence'),
-    path('translations/<translation_id>/sentences/<sentence_id>/edit', views.update_translation_sentence, name='update-translation-sentence'),
-    path('translations/<translation_id>/sentences/<sentence_id>/delete', views.delete_translation_sentence, name='delete-translation-sentence'),
+    path('translations/<translation_id>/sentences/<sentence_id>/', views.show_sentence, name='show-sentence'),
+    path('translations/<translation_id>/sentences/new', views.create_sentence, name='create-sentence'),
+    path('translations/<translation_id>/sentences/<sentence_id>/edit', views.update_sentence, name='update-sentence'),
+    path('translations/<translation_id>/sentences/<sentence_id>/delete', views.delete_sentence, name='delete-sentence'),
 
     # # Change #add AFTER import_content
     # # path('sentences/<sentence_id>/changes/', views.index_sentence_changes, name='index-sentence-changes'),

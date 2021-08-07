@@ -37,9 +37,9 @@
   <a class="btn btn-xs btn-success" href="{% url 'index-messages' %}">View Translations</a>
   &nbsp;
   <!-- <a class="btn btn-outline-secondary btn-sm" href="{% url 'create-message' %}">New Message</a> -->
-  <!--<a class="btn btn-outline-secondary btn-sm" href="{% url 'create-message-translation' message.id %}">New Translation</a> -->
+  <!--<a class="btn btn-outline-secondary btn-sm" href="{% url 'create-translation' message.id %}">New Translation</a> -->
   <a class="btn btn-xs btn-primary" href="{% url 'create-assignment' %}">New Assignment</a> <!---->
-  <a class="btn btn-xs btn-primary" href="{% url 'create-translation-sentence' translation.id %}">New Sentence</a>
+  <a class="btn btn-xs btn-primary" href="{% url 'create-sentence' translation.id %}">New Sentence</a>
   
   <center><h2>Assignments</h2></center>
   <table class="table table-hover">
@@ -117,7 +117,7 @@
     <tbody>
 {% for sentence in sentences %}
       <tr>
-        <td><a href="{% url 'show-translation-sentence' translation.id sentence.id %}">{{sentence.id}}</a></td> <!---->
+        <td><a href="{% url 'show-sentence' translation.id sentence.id %}">{{sentence.id}}</a></td> <!---->
         <td>{{sentence.blk}}</td>
         <td>{{sentence.sub}}</td>
         <td>{{sentence.rsub}}</td>
@@ -125,7 +125,7 @@
         <td>{{sentence.rsen}}</td>
         <td>{{sentence.typ}}</td>
         <td>{{sentence.tie}}</td>
-        <td><a href="{% url 'update-translation-sentence' translation.id sentence.id %}">Edit</a>&nbsp;&nbsp;<a href="{% url 'delete-translation-sentence' translation.id sentence.id %}">Delete</a></td>
+        <td><a href="{% url 'update-sentence' translation.id sentence.id %}">Edit</a>&nbsp;&nbsp;<a href="{% url 'delete-sentence' translation.id sentence.id %}">Delete</a></td>
         <!----> <!---->
       </tr>
 {% endfor %}
