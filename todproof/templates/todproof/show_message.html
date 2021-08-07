@@ -14,12 +14,12 @@
   <strong>Title:</strong>&nbsp;&nbsp;{{ message.title }}<br>
   <!-- </center> -->
   <hr>
-  <a class="btn btn-outline-primary btn-sm" href="{% url 'update-message' message.id %}">Edit</a> <!---->
-  <a class="btn btn-outline-danger btn-sm" href="{% url 'delete-message' message.id %}">Delete</a> <!---->
-  <a class="btn btn-outline-success btn-sm" href="{% url 'index-messages' %}">All Messages</a>
+  <a class="btn btn-xs btn-primary" href="{% url 'update-message' message.id %}">Edit</a> <!---->
+  <a class="btn btn-xs btn-danger" href="{% url 'delete-message' message.id %}">Delete</a> <!---->
+  <a class="btn btn-xs btn-success" href="{% url 'index-messages' %}">View all Messages</a>
   &nbsp;
-  <a class="btn btn-outline-secondary btn-sm" href="{% url 'create-message' %}">New Message</a> <!---->
-  <a class="btn btn-outline-secondary btn-sm" href="{% url 'create-message-translation' message.id %}">New Translation</a><br><br> <!---->
+  <a class="btn btn-xs btn-primary" href="{% url 'create-message' %}">New Message</a> <!---->
+  <a class="btn btn-xs btn-primary" href="{% url 'create-message-translation' message.id %}">New Translation</a><br><br> <!---->
   <center><h2>Translations</h2></center>
   <table class="table table-hover">
     <thead>

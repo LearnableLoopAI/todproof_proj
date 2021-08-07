@@ -17,9 +17,9 @@
 {% if translation.lan == 'ENG' %}
   <strong>Lookup Imported:</strong>&nbsp;&nbsp;{{ translation.li }}<br>
   {% if translation.li %}
-  <strong>Lookup:</strong>&nbsp;&nbsp;<a class="btn btn-outline-primary btn-sm" href="{% url 'delete-lookup' translation.message.id translation.id %}">Delete Lookup</a> <!----><br>
+  <strong>Lookup:</strong>&nbsp;&nbsp;<a class="btn btn-xs btn-danger" href="{% url 'delete-lookup' translation.message.id translation.id %}">Delete Lookup</a> <!----><br>
   {% else %}
-  <strong>Lookup:</strong>&nbsp;&nbsp;<a class="btn btn-outline-primary btn-sm" href="{% url 'import-lookup' translation.message.id translation.id %}">Import Lookup</a> <!----><br>
+  <strong>Lookup:</strong>&nbsp;&nbsp;<a class="btn btn-xs btn-primary" href="{% url 'import-lookup' translation.message.id translation.id %}">Import Lookup</a> <!----><br>
   {% endif %}
 {% else %}
 <strong>Translate Additions Randomized:</strong>&nbsp;&nbsp;{{ translation.li }}<br>
@@ -32,14 +32,14 @@
   <strong>Version:</strong>&nbsp;&nbsp;{{ translation.version }}<br>  
   <!-- </center> -->
   <hr>
-  <a class="btn btn-outline-primary btn-sm" href="">Edit</a> <!--% url 'update-message-translation' message.id translation.id %-->
-  <a class="btn btn-outline-danger btn-sm" href="">Delete</a> <!--% url 'delete-message-translation' message.id translation.id %-->
-  <a class="btn btn-outline-success btn-sm" href="{% url 'index-messages' %}">All Translations</a>
+  <a class="btn btn-xs btn-primary" href="">Edit</a> <!--% url 'update-message-translation' message.id translation.id %-->
+  <a class="btn btn-xs btn-danger" href="">Delete</a> <!--% url 'delete-message-translation' message.id translation.id %-->
+  <a class="btn btn-xs btn-success" href="{% url 'index-messages' %}">View Translations</a>
   &nbsp;
   <!-- <a class="btn btn-outline-secondary btn-sm" href="{% url 'create-message' %}">New Message</a> -->
   <!--<a class="btn btn-outline-secondary btn-sm" href="{% url 'create-message-translation' message.id %}">New Translation</a> -->
-  <a class="btn btn-outline-secondary btn-sm" href="{% url 'create-assignment' %}">New Assignment</a> <!---->
-  <a class="btn btn-outline-secondary btn-sm" href="{% url 'create-translation-sentence' translation.id %}">New Sentence</a>
+  <a class="btn btn-xs btn-primary" href="{% url 'create-assignment' %}">New Assignment</a> <!---->
+  <a class="btn btn-xs btn-primary" href="{% url 'create-translation-sentence' translation.id %}">New Sentence</a>
   
   <center><h2>Assignments</h2></center>
   <table class="table table-hover">

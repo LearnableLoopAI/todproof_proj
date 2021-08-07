@@ -13,10 +13,10 @@
   <strong>Content imported:</strong>&nbsp;&nbsp;{{ assignment.ci }}<br>
   <strong>Content:</strong>&nbsp;&nbsp;
   {% if assignment.ci %}
-  <a class="btn btn-outline-primary btn-sm" href="">Delete Content</a> <!--% url 'delete-lookup' translation.message.id translation.id %--><br>
+  <a class="btn btn-xs btn-danger" href="">Delete Content</a> <!--% url 'delete-lookup' translation.message.id translation.id %--><br>
   {% else %}
-  <a class="btn btn-outline-primary btn-sm" href="{% url 'import-content-for-validation' assignment.id %}">Validate Content</a> <!---->
-  <a class="btn btn-outline-primary btn-sm" href="{% url 'import-content' assignment.id %}">Import Content</a> <!----><br>
+  <a class="btn btn-xs btn-primary" href="{% url 'import-content-for-validation' assignment.id %}">Validate Content</a> <!---->
+  <a class="btn btn-xs btn-primary" href="{% url 'import-content' assignment.id %}">Import Content</a> <!----><br>
   {% endif %}
 {% endif %}
   <!--<strong>Translation:</strong>&nbsp;&nbsp;{{ assignment.translation }}<br>-->
@@ -38,9 +38,9 @@
   <strong>Notes:</strong>&nbsp;&nbsp;{{ assignment.notes }}<br>
   <!-- </center> -->
   <hr>
-  <a class="btn btn-outline-primary btn-sm" href="{% url 'update-assignment' assignment.id %}">Edit</a> <!---->
-  <a class="btn btn-outline-danger btn-sm" href="{% url 'delete-assignment' assignment.id %}">Delete</a> <!---->
-  <a class="btn btn-outline-success btn-sm" href="{% url 'index-assignments' %}">All Assignments</a>
+  <a class="btn btn-xs btn-primary" href="{% url 'update-assignment' assignment.id %}">Edit</a> <!---->
+  <a class="btn btn-xs btn-danger" href="{% url 'delete-assignment' assignment.id %}">Delete</a> <!---->
+  <a class="btn btn-xs btn-success" href="{% url 'index-assignments' %}">View ALL Assignments</a>
   &nbsp;
-  <a class="btn btn-outline-secondary btn-sm" href="{% url 'create-assignment' %}">New Assignment</a> <!---->
+  <a class="btn btn-xs btn-primary" href="{% url 'create-assignment' %}">New Assignment</a> <!---->
 {% endblock %}
