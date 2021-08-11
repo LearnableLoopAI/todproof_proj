@@ -137,8 +137,8 @@ def create_translation(request, message_id):
     return render(request, 'todproof/create_translation.html', {'form': form})
 
 def update_translation(request, message_id, translation_id):
-  translation = Translation.objects.get(pk=translation_id)
   message = Message.objects.get(pk=message_id)
+  translation = Translation.objects.get(pk=translation_id)
   form = TranslationForm(initial={'lan': translation.lan, 'tran_title': translation.tran_title, 'eng_tran': translation.eng_tran, 'descrip': translation.descrip, 'blkc': translation.blkc, 'subc': translation.subc, 'senc': translation.senc, 'xcrip': translation.xcrip, 'li': translation.li, 'pubdate': translation.pubdate, 'version': translation.version })
   if request.method == 'POST':
     form = TranslationForm(request.POST, instance=translation)
@@ -294,7 +294,7 @@ def create_sentence(request, translation_id):
 
 def update_sentence(request, translation_id, sentence_id):
   sentence = Sentence.objects.get(pk=sentence_id)
-  translation = Sentence.objects.get(pk=sentence_id)
+  translation = Translation.objects.get(pk=translation_id)
   form = SentenceForm(initial={'blk': sentence.blk, 'sub': sentence.sub, 'rsub': sentence.rsub, 'sen': sentence.sen, 'rsen': sentence.rsen, 'typ': sentence.typ, 'tie': sentence.tie })
   if request.method == 'POST':
     form = SentenceForm(request.POST, instance=sentence)
@@ -323,6 +323,39 @@ def delete_sentence(request, translation_id, sentence_id):
     print('Sentence delete failure: ' + e)
   return redirect(f'/messages/{translation.message.id}/translations/{translation_id}')
 
+def prev_sentence(request, translation_id, sentence_id):
+  translation = Translation.objects.get(pk=translation_id)
+  sentence = Sentence.objects.get(pk=sentence_id)
+
+  #update rsen
+  prev_rsen = sentence.rsen - 1
+  if prev_rsen < 1:
+    prev_rsen = 1
+    print(f"This is the first sentence.")
+    messages.error(request, f"This is the first sentence.")
+  Assignment.objects.filter(pk=get_current_user().cur_assign.id).update(place=prev_rsen) #was: current_user.cur_assign.update(place: prev_rsen)
+
+  #update @sentence
+  sentence = translation.sentences.filter(rsen=prev_rsen)[0] #@sentence = @translation.sentences.where(rsen: prev_rsen).first
+
+  return redirect(f'/translations/{translation_id}/sentences/{sentence.id}') 
+
+def next_sentence(request, translation_id, sentence_id):
+  translation = Translation.objects.get(pk=translation_id)
+  sentence = Sentence.objects.get(pk=sentence_id)
+
+  #update rsen
+  next_rsen = sentence.rsen + 1
+  if next_rsen > translation.senc:
+    next_rsen = translation.senc
+    print(f"This is the last sentence.")
+    messages.error(request, f"This is the last sentence.")
+  Assignment.objects.filter(pk=get_current_user().cur_assign.id).update(place=next_rsen) #was: current_user.cur_assign.update(place: next_rsen)
+
+  #update @sentence
+  sentence = translation.sentences.filter(rsen=next_rsen)[0] #@sentence = @translation.sentences.where(rsen: next_rsen).first
+
+  return redirect(f'/translations/{translation_id}/sentences/{sentence.id}') 
 
 ###############################################################################
 # Assignment

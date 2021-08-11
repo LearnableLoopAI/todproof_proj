@@ -33,12 +33,15 @@ urlpatterns = [
     path('translations/<translation_id>/sentences/<sentence_id>/edit', views.update_sentence, name='update-sentence'),
     path('translations/<translation_id>/sentences/<sentence_id>/delete', views.delete_sentence, name='delete-sentence'),
 
-    # # Change #add AFTER import_content
-    # # path('sentences/<sentence_id>/changes/', views.index_sentence_changes, name='index-sentence-changes'),
-    # path('sentences/<sentence_id>/changes/<change_id>/', views.show_sentence_change, name='show-sentence-change'),
-    # path('sentences/<sentence_id>/changes/new', views.create_sentence_change, name='create-sentence-change'),
-    # path('sentences/<sentence_id>/changes/<change_id>/edit', views.update_sentence_change, name='update-sentence-change'),
-    # path('sentences/<sentence_id>/changes/<change_id>/delete', views.delete_sentence_change, name='delete-sentence-change'),
+    path('translations/<translation_id>/sentences/<sentence_id>/prev', views.prev_sentence, name='prev-sentence'),
+    path('translations/<translation_id>/sentences/<sentence_id>/next', views.next_sentence, name='next-sentence'),
+
+    # # Edit #add AFTER import_content
+    # # path('sentences/<sentence_id>/edits/', views.index_edits, name='index-edits'),
+    # path('sentences/<sentence_id>/edits/<edit_id>/', views.show_edit, name='show-edit'),
+    # path('sentences/<sentence_id>/edits/new', views.create_edit, name='create-edit'),
+    # path('sentences/<sentence_id>/edits/<edit_id>/edit', views.update_edit, name='update-edit'),
+    # path('sentences/<sentence_id>/edits/<edit_id>/delete', views.delete_edit, name='delete-edit'),
 
     # Assignment
     path('assignments/', views.index_assignments, name='index-assignments'),

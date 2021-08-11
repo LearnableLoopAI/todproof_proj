@@ -2,21 +2,21 @@
 
 {% block content %}
 <div align=center>
-  <a href="" class="btn btn-info btn-default"><span class="glyphicon glyphicon-chevron-left"></span></a> <!--% url 'prev-sentence' sentence.translation.id sentence.id %-->
+  <a href="{% url 'prev-sentence' sentence.translation.id sentence.id %}" class="btn btn-info btn-default"><span class="glyphicon glyphicon-chevron-left"></span></a> <!---->
   <a href="" class="btn btn-warning btn-default"><span class="glyphicon glyphicon-minus"></span></a> <!--% url 'decrease-context' sentence.translation.id sentence.id %-->
 {% if user.admin %}
   ({{ sentence.id }})
   <form class="form-inline" style="display:inline;" method="POST" action="{% url 'search-messages' %}"> <!--{{ sentence.blk }}-->
-    <input class="form-control" type="search" placeholder="Blk" aria-label="Search" name="searched" size="3">
+    <input class="form-control" type="search" placeholder="Blk" aria-label="Search" name="searched" size="3" value="{{ sentence.blk }}">
   </form>
   {{ sentence.sub }}&nbsp;
   <form class="form-inline" style="display:inline;" method="POST" action="{% url 'search-messages' %}"> <!--{{ sentence.rsub }}-->
-    <input class="form-control" type="search" placeholder="RSub" aria-label="Search" name="searched" size="5">
+    <input class="form-control" type="search" placeholder="RSub" aria-label="Search" name="searched" size="5" value="{{ sentence.rsub }}">
   </form>
   {{ sentence.sen }}
 {% endif %}
   <form class="form-inline" style="display:inline;" method="POST" action="{% url 'search-messages' %}"> <!--{{ sentence.rsen }}-->
-    <input class="form-control" type="search" placeholder="RSen" aria-label="Search" name="searched" size="5">
+    <input class="form-control" type="search" placeholder="RSen" aria-label="Search" name="searched" size="5" value="{{ sentence.rsen }}">
   </form>
 {% if user.admin %}
   {{ sentence.typ }}
@@ -44,7 +44,7 @@
   <a href="" class="btn btn-primary btn-default"><span class="glyphicon glyphicon-eye-open"></span></a> <!--% url 'preview' sentence.translation.id sentence.id %-->
   &nbsp;&nbsp;&nbsp;
   <a href="" class="btn btn-warning btn-default"><span class="glyphicon glyphicon-plus"></span></a> <!--% url 'increase-context' sentence.translation.id sentence.id %-->
-  <a href="" class="btn btn-info btn-default"><span class="glyphicon glyphicon-chevron-right"></span></a> <!--% url 'next-sentence' sentence.translation.id sentence.id %-->
+  <a href="{% url 'next-sentence' sentence.translation.id sentence.id %}" class="btn btn-info btn-default"><span class="glyphicon glyphicon-chevron-right"></span></a> <!---->
 </div><br>
 
 {% if user.admin %}
@@ -98,7 +98,7 @@
   
 {{E_edit.content}}<br>
 {% for edit in sentence.edits.all %}
-  {{edit.content}}
+  ({{edit.id}}) {{edit.content}}
 {% endfor %}
 
 {% endblock %}
