@@ -264,13 +264,27 @@ def show_sentence(request, translation_id, sentence_id):
   translation = Translation.objects.get(pk=translation_id)
   sentence = translation.sentences.get(pk=sentence_id)
 
+  # session_context = Assignment.objects.filter(pk=get_current_user().cur_assign.id)[0].context
+  session_context = Assignment.objects.get(pk=get_current_user().cur_assign.id).context
+  print('session_context = ', session_context)
+  # Assignment.objects.filter(pk=get_current_user().cur_assign.id).update(context=2)
+  # session_context = 2
+
+  #update pred_E_edits
+  # @pred_E_edits = Edit.joins(sentence: :translation).where(translations: {id: @sentence.translation.eng_tran_id}, sentences: {rsen: @sentence.rsen-session[:context]..@sentence.rsen-1})
+  pred_E_edits = Edit.objects.select_related().filter(sentence__translation__id=sentence.translation.eng_tran_id, sentence__rsen__range=(sentence.rsen-session_context, sentence.rsen-1))
+
   #update E_edit
   # @E_edit = Edit.joins(sentence: :translation).where(translations: {id: @sentence.translation.eng_tran_id}, sentences: {rsen: @sentence.rsen}).first
   E_edit = Edit.objects.select_related().filter(sentence__translation__id=sentence.translation.eng_tran_id, sentence__rsen=sentence.rsen)[0]
 
+  #update succ_E_edits
+  # @succ_E_edits = Edit.joins(sentence: :translation).where(translations: {id: @sentence.translation.eng_tran_id}, sentences: {rsen: @sentence.rsen+1..@sentence.rsen+session[:context]})
+  succ_E_edits = Edit.objects.select_related().filter(sentence__translation__id=sentence.translation.eng_tran_id, sentence__rsen__range=(sentence.rsen+1, sentence.rsen+session_context))
+
   return render(request, 'todproof/show_sentence.html', 
     {'translation': translation, 'sentence': sentence, 'E_edit': E_edit, 'sentence_count': translation.sentences.count(), 
-    'sentence_vote_time': sentence_vote_time(sentence), 'sentence_create_time': sentence_create_time(sentence)})
+    'sentence_vote_time': sentence_vote_time(sentence), 'sentence_create_time': sentence_create_time(sentence), 'pred_E_edits': pred_E_edits, 'succ_E_edits': succ_E_edits})
 
 
 def create_sentence(request, translation_id):
@@ -354,6 +368,36 @@ def next_sentence(request, translation_id, sentence_id):
 
   #update @sentence
   sentence = translation.sentences.filter(rsen=next_rsen)[0] #@sentence = @translation.sentences.where(rsen: next_rsen).first
+
+  return redirect(f'/translations/{translation_id}/sentences/{sentence.id}') 
+
+def decrease_context(request, translation_id, sentence_id):
+  translation = Translation.objects.get(pk=translation_id)
+  sentence = Sentence.objects.get(pk=sentence_id)
+
+  context = Assignment.objects.get(pk=get_current_user().cur_assign.id).context - 1
+  if context < 0:
+    Assignment.objects.filter(pk=get_current_user().cur_assign.id).update(context=0)
+    print(f"This is the minimum context.")
+    messages.error(request, f"This is the minimum context.")
+  else:
+    Assignment.objects.filter(pk=get_current_user().cur_assign.id).update(context=context)
+  print('context = ', context)
+
+  return redirect(f'/translations/{translation_id}/sentences/{sentence.id}') 
+
+def increase_context(request, translation_id, sentence_id):
+  translation = Translation.objects.get(pk=translation_id)
+  sentence = Sentence.objects.get(pk=sentence_id)
+
+  context = Assignment.objects.get(pk=get_current_user().cur_assign.id).context + 1
+  if context > 10:
+    Assignment.objects.filter(pk=get_current_user().cur_assign.id).update(context=10)
+    print(f"This is the maximum context.")
+    messages.error(request, f"This is the maximum context.")
+  else:
+    Assignment.objects.filter(pk=get_current_user().cur_assign.id).update(context=context)
+  print('context = ', context)
 
   return redirect(f'/translations/{translation_id}/sentences/{sentence.id}') 
 

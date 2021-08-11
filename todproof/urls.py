@@ -36,6 +36,10 @@ urlpatterns = [
     path('translations/<translation_id>/sentences/<sentence_id>/prev', views.prev_sentence, name='prev-sentence'),
     path('translations/<translation_id>/sentences/<sentence_id>/next', views.next_sentence, name='next-sentence'),
 
+    path('translations/<translation_id>/sentences/<sentence_id>/decrease-context', views.decrease_context, name='decrease-context'),
+    path('translations/<translation_id>/sentences/<sentence_id>/increase-context', views.increase_context, name='increase-context'),
+
+
     # # Edit #add AFTER import_content
     # # path('sentences/<sentence_id>/edits/', views.index_edits, name='index-edits'),
     # path('sentences/<sentence_id>/edits/<edit_id>/', views.show_edit, name='show-edit'),

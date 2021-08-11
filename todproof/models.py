@@ -100,6 +100,7 @@ class Assignment(models.Model):
   active = models.BooleanField('Active', default=False)
   # place = models.IntegerField('Place', default=1, validators=[MinValueValidator(1), MaxValueValidator(translation.senc)], blank=False, null=False,)
   place = models.IntegerField('Place', default=1, validators=[MinValueValidator(1)], blank=False, null=False,)
+  context = models.IntegerField('Context', default=0, validators=[MinValueValidator(0), MinValueValidator(10)], blank=False, null=False,)
   ci = models.BooleanField('Content imported', default=False)
   status = models.CharField('Status', max_length=2, validators=[MinLengthValidator(2), MaxLengthValidator(2)], choices=Status.choices, default=Status.ip, blank=False, null=False,)
   ccs = models.IntegerField('Final Create additions', blank=True, null=True,)

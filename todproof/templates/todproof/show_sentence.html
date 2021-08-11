@@ -3,7 +3,7 @@
 {% block content %}
 <div align=center>
   <a href="{% url 'prev-sentence' sentence.translation.id sentence.id %}" class="btn btn-info btn-default"><span class="glyphicon glyphicon-chevron-left"></span></a> <!---->
-  <a href="" class="btn btn-warning btn-default"><span class="glyphicon glyphicon-minus"></span></a> <!--% url 'decrease-context' sentence.translation.id sentence.id %-->
+  <a href="{% url 'decrease-context' sentence.translation.id sentence.id %}" class="btn btn-warning btn-default"><span class="glyphicon glyphicon-minus"></span></a> <!---->
 {% if user.admin %}
   ({{ sentence.id }})
   <form class="form-inline" style="display:inline;" method="POST" action="{% url 'search-messages' %}"> <!--{{ sentence.blk }}-->
@@ -43,7 +43,7 @@
   &nbsp;&nbsp;&nbsp;
   <a href="" class="btn btn-primary btn-default"><span class="glyphicon glyphicon-eye-open"></span></a> <!--% url 'preview' sentence.translation.id sentence.id %-->
   &nbsp;&nbsp;&nbsp;
-  <a href="" class="btn btn-warning btn-default"><span class="glyphicon glyphicon-plus"></span></a> <!--% url 'increase-context' sentence.translation.id sentence.id %-->
+  <a href="{% url 'increase-context' sentence.translation.id sentence.id %}" class="btn btn-warning btn-default"><span class="glyphicon glyphicon-plus"></span></a> <!---->
   <a href="{% url 'next-sentence' sentence.translation.id sentence.id %}" class="btn btn-info btn-default"><span class="glyphicon glyphicon-chevron-right"></span></a> <!---->
 </div><br>
 
@@ -61,7 +61,7 @@
 <div class="row">
   <div class="col-xs-12">
 {% for e in pred_E_edits %}
-    <div style='color:blue;'></div> <!--{ markdown(e.content) }-->
+    <div style='color:blue;'>({{e.id}}) {{e.content}}</div> <!--{ markdown(e.content) }-->
 {% endfor %}
   </div>
 </div>
@@ -100,6 +100,16 @@
 {% for edit in sentence.edits.all %}
   ({{edit.id}}) {{edit.content}}
 {% endfor %}
+<br/><br/>
+
+<div class="row">
+  <div class="col-xs-12">
+{% for e in succ_E_edits %}
+    <div style='color:blue;'>({{e.id}}) {{e.content}}</div> <!--{ markdown(e.content) }-->
+{% endfor %}
+  </div>
+</div>
+
 
 {% endblock %}
 
